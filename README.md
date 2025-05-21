@@ -1,3 +1,5 @@
+Verteilte-Systeme-Projekt von Duy Anh Simon Pham (TINF22B2)
+
 # Ich packe meinen Koffer
 	•	Frontend: Angular 19.2.12
 	•	Backend: Node.js + Socket.IO
