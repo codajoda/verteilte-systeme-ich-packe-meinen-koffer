@@ -1,0 +1,29 @@
+<div class="body">
+  <div class="content">
+    <div class="item" style="justify-content: center">
+      <h2 style="text-align: center">ICH PACKE MEINEN KOFFER</h2>
+    </div>
+    <div class="item">
+      <mat-form-field class="input-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name">
+      </mat-form-field>
+    </div>
+    <div class="item">
+      <mat-form-field class="input-full-width">
+        <mat-label>Lobby Code</mat-label>
+        <input matInput [(ngModel)]="lobbyId">
+      </mat-form-field>
+      <button mat-fab extended style="margin-top: -20px" (click)="joinLobby()">Join friends</button>
+    </div>
+    <div class="item">
+      <button mat-fab extended style="width: 100%" (click)="createLobby()">Create new lobby</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="item" style="justify-content: center">
+      <h3 style="color: red">
+        {{ errorMessage }}
+      </h3>
+    </div>
+  </div>
+</div>

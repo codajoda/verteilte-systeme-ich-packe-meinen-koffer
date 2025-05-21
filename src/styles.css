@@ -1,1 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: grey;
+
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  width: 50%;
+  height: 50%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2%
+}
+
+.input-full-width {
+  width: 100%;
+  height: 100%;
+}
+
+.chip-list {
+  margin: 2%;
+}
+
+.mdc-evolution-chip-set__chips {
+  justify-content: center !important;
+}
+
+.chip {
+  margin-bottom: 4px;
+}
+
+mat-chip-option {
+  &.mat-mdc-chip.mat-mdc-chip-option.mat-mdc-standard-chip.mat-primary {
+    .mdc-evolution-chip__cell {
+      .mdc-evolution-chip__action {
+        padding-left: 12px;
+        .mdc-evolution-chip__graphic {
+          display: none;
+        }
+      }
+    }
+  }
+}

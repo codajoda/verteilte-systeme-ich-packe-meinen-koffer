@@ -11,6 +11,10 @@
 npm-debug.log
 yarn-error.log
 
+# Certificates
+server/certs/*
+!server/certs/.gitkeep
+
 # IDEs and editors
 .idea/
 .project

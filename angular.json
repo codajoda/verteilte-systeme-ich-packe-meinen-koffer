@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/cyan-orange.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -57,12 +58,28 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "ichPackeMeinenKoffer:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "ichPackeMeinenKoffer:build:production"
             },
             "development": {
               "buildTarget": "ichPackeMeinenKoffer:build:development"
+            },
+            "https-dev": {
+              "buildTarget": "ichPackeMeinenKoffer:build:development",
+              "ssl": true,
+              "sslKey": "server/certs/localhost+2-key.pem",
+              "sslCert": "server/certs/localhost+2.pem"
+            },
+            "https-prod": {
+              "buildTarget": "ichPackeMeinenKoffer:build:production",
+              "ssl": true,
+              "sslKey": "server/certs/localhost+2-key.pem",
+              "sslCert": "server/certs/localhost+2.pem"
             }
           },
           "defaultConfiguration": "development"
@@ -85,6 +102,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/cyan-orange.css",
               "src/styles.css"
             ],
             "scripts": []

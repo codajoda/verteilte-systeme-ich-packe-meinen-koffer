@@ -1,0 +1,136 @@
+<div class="body" [ngStyle]="{'justify-content': winningScreen ? 'center' : 'center'}">
+  <div class="content" style="position: relative">
+    @if (winningScreen) {
+      <div>
+        <div class="item" style="justify-content: center;">
+          <h1 style="text-align: center;">THE WINNER IS: <br> <span style="color: #00fbfb">{{winner}}</span></h1>
+        </div>
+        <div class="item" style="flex-direction: column; justify-content: center">
+          <div>
+            <h2 style="margin: 0">Final List:</h2>
+          </div>
+          <div class="item">
+            <mat-list>
+              @for (word of endWordlist; track word) {
+                <mat-list-item style="height: 20px; text-align: center">{{ endWordlist.indexOf(word)+1 }}. {{ word }}</mat-list-item>
+              }
+            </mat-list>
+          </div>
+        </div>
+        <div class="item" style="justify-content: center; margin-top: 4%">
+          <button mat-fab extended (click)="backToLobby()">Back to Lobby</button>
+        </div>
+      </div>
+    }
+    @else if (!gameRunning) {
+      <div>
+        <div class="item" style="justify-content: center">
+          <button mat-fab extended (click)="leaveLobby()">Leave lobby</button>
+        </div>
+        <div class="item" style="justify-content: center;">
+          <h2 style="text-align: center">ICH PACKE MEINEN KOFFER</h2>
+        </div>
+        <div class="item" style="flex-direction: column; align-items: center;">
+          <h3 style="margin: 0">Lobby</h3>
+          <h2 style="margin-top: 1%">{{lobbyId}}</h2>
+        </div>
+        <div class="item" style="flex-direction: column; align-items: center; margin-bottom: 2%">
+          <h4 style="margin: 0;">Players:</h4>
+          <mat-chip-listbox class="chip-list">
+            @if (lobby && lobby.clients) {
+              @for (player of lobby.clients; track player) {
+                <mat-chip-option
+                  [selected]="player.ready"
+                  [selectable]="false"
+                  disableRipple
+                  class="chip"
+                >
+                  <span [ngStyle]="{'text-decoration': playerName === player.name ? 'underline' : 'none'}">
+                    {{ player.name }}
+                    <small *ngIf="player.host">(Host) </small>
+                    <small>– {{ player.ready ? 'Ready' : 'Not ready' }}</small>
+                  </span>
+                </mat-chip-option>
+              }
+            }
+          </mat-chip-listbox>
+        </div>
+
+        <div class="item" style="margin-bottom: 2%">
+          <button mat-fab extended style="width: 100%" (click)="setReady()">{{ ready ? 'Set not Ready' : 'Set Ready'}}</button>
+        </div>
+        <div class="item" style="justify-content: center">
+          @if (host) {
+            <button mat-fab extended style="width: 100%" (click)="startGame()" [disabled]="!canStartGame">Star game</button>
+          } @else {
+            <p style="text-align: center">Wait for host to start the game</p>
+          }
+        </div>
+      </div>
+    }
+    @else if (gameState) {
+      <div class="item">
+        Spectators:
+        @for (player of gameState.spectators; track player) {
+          <span>
+            {{ player }} {{playerName === player ? ' (You)' : ''}}
+          </span>
+        }
+      </div>
+      <div>
+        <div class="item" style="justify-content: center">
+          @if (turn) {
+            <h2 style="text-align: center">YOUR TURN</h2>
+          } @else if (!isActivePlayer) {
+            <h2 style="text-align: center">YOUR'RE OUT</h2>
+          } @else {
+            <h2 style="text-align: center">WAIT FOR YOUR TURN</h2>
+          }
+        </div>
+        <div class="item" style="flex-direction: column; align-items: center; margin-bottom: 2%; justify-content: center">
+          <h4 style="margin: 0;">Active players:</h4>
+          <mat-chip-listbox class="chip-list">
+            @for (player of gameState.activePlayers; track player) {
+              <mat-chip-option
+                [selectable]="false"
+                [selected]="player == gameState.playerTurn"
+                disableRipple
+                class="chip"
+              >
+              <span>
+                {{ player }} {{playerName === player ? ' (You)' : ''}}
+              </span>
+              </mat-chip-option>
+            }
+          </mat-chip-listbox>
+        </div>
+        <div class="item">
+          <mat-form-field class="input-full-width">
+            <mat-label>Type in word (max. 40 Symbols)</mat-label>
+            <input matInput [(ngModel)]="guess" (keydown.enter)="onGuess()" [disabled]="!turn" autocomplete="off" (ngModelChange)="onGuessChange($event)">
+          </mat-form-field>
+          <button mat-fab extended style="margin-top: -20px" (click)="onGuess()" [disabled]="!turn">Submit</button>
+        </div>
+        <div class="item" style="justify-content: center">
+          @if (newWord) {
+            <h3>New Word: {{ newWord }}</h3>
+          } @else {
+            <mat-chip-listbox class="chip-list">
+              @for (word of guessedWords; track word) {
+                <mat-chip-option
+                  [selectable]="false"
+                  [selected]="true"
+                  disableRipple
+                  class="chip"
+                >
+                  {{ word }}
+                </mat-chip-option>
+              }
+            </mat-chip-listbox>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
